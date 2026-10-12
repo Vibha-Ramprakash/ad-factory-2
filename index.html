@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ad Factory 2.0</title>
+<meta name="description" content="One product photo, 100 ads, and a report every two days that you just approve. Claude + Higgsfield + HyperFrames. Prompts, setup and a live demo dashboard. By @vibha.in.progress">
+<meta property="og:title" content="Ad Factory 2.0: one photo, 100 ads, you just approve"><meta property="og:image" content="img/ad_wall.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F3ECE1;--paper:#FBF7F1;--esp:#2A1F1A;--esp2:#5A4A40;--terra:#C8553D;--gold:#F2C46D;--sage:#6E8B74;--chip:#F6DCD3;--line:rgba(42,31,26,.14);--grid:rgba(42,31,26,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background-color:var(--cream);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;
+  color:var(--esp);font:400 16.5px/1.6 'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--terra);text-underline-offset:3px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.nw{white-space:nowrap}
+header{padding:18px 0 34px}
+.topline{display:flex;justify-content:space-between;gap:12px;font:500 10.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--esp2);padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:30px}
+h1{font:400 clamp(46px,12.5vw,84px)/.95 'Instrument Serif',serif;letter-spacing:-.02em}
+h1 em{color:var(--terra)}
+h1 .ul{background:linear-gradient(var(--terra),var(--terra)) 0 92%/100% 5px no-repeat;padding-bottom:4px}
+.dek{margin-top:18px;font-size:clamp(16.5px,4.4vw,19px);line-height:1.5;color:var(--esp2);max-width:34em}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pills a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--esp);background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--terra);border-radius:10px;padding:9px 12px;font:600 14px 'Inter',sans-serif}
+.pills a span{font:700 11px 'JetBrains Mono',monospace;color:var(--terra)}
+.by{margin-top:20px;font:700 12.5px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--esp2)}
+.kicker{font:700 11.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--sage)}
+h2{font:400 clamp(32px,8.4vw,46px)/1.02 'Instrument Serif',serif;letter-spacing:-.01em;margin-top:2px}
+h2 em{color:var(--terra)}
+h3{font:700 11.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+h3:before{content:"";width:8px;height:8px;border-radius:2px;background:var(--terra);flex:none}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+.honest{margin-top:16px;border-left:5px solid var(--terra);background:linear-gradient(90deg,rgba(242,196,109,.38),rgba(242,196,109,.16));border-radius:4px 14px 14px 4px;padding:14px 16px;font-weight:600}
+.needs{display:grid;gap:10px;margin-top:14px}
+.need{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px}
+.need .n{font:700 12px 'JetBrains Mono',monospace;color:var(--gold);background:var(--esp);border-radius:8px;padding:4px 8px;margin-top:2px}
+.need b{display:block}
+.need p{color:var(--esp2);font-size:15px}
+section{padding-top:40px;margin-top:32px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0;margin-top:0;padding-top:8px}
+.stephead{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.stepnum{flex:none;width:52px;height:52px;border-radius:14px;background:var(--terra);color:#fff;font:700 18px/52px 'JetBrains Mono',monospace;text-align:center;box-shadow:0 8px 18px -8px rgba(200,85,61,.7)}
+.why{font-size:17px}
+.note{margin-top:16px;font-size:15.5px;color:var(--esp2)}
+.note b{color:var(--esp)}
+.note.small{font-size:14px}
+.ph{color:var(--terra);background:var(--chip);border-radius:5px;padding:0 4px;font-weight:600}
+.pblock{margin-top:16px;background:var(--esp);border-radius:18px;overflow:hidden;box-shadow:0 16px 30px -18px rgba(42,31,26,.7)}
+.pblock figcaption{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 11px 11px 16px;border-bottom:1px solid rgba(243,236,225,.12)}
+.plabel{color:var(--cream);font:600 14px/1.35 'Inter',sans-serif;min-width:0}
+.ptag{display:inline-block;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--esp);background:var(--gold);border-radius:999px;padding:3px 8px;margin-right:8px;vertical-align:1px}
+button.copy{flex:none;font:700 13px 'JetBrains Mono',monospace;letter-spacing:.04em;color:#fff;background:var(--terra);border:0;border-radius:999px;padding:9px 18px;cursor:pointer;min-height:40px;transition:transform .15s ease-out,background .2s}
+button.copy:active{transform:scale(.96)}
+button.copy.done{background:var(--sage)}
+.pblock pre{margin:0;padding:16px;color:var(--cream);font:400 14px/1.65 'JetBrains Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.pblock .cmd{color:#8FB8FF;font-weight:700}
+.pblock .ph{color:var(--gold);background:rgba(242,196,109,.15);font-weight:700}
+.check{margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+.check ol{list-style:none;counter-reset:o;display:grid;gap:10px}
+.check li{counter-increment:o;display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.check li:before{content:counter(o);width:28px;height:28px;border-radius:8px;background:var(--esp);color:var(--gold);font:700 13px/28px 'JetBrains Mono',monospace;text-align:center}
+.check li span{padding-top:2px}
+.check b{font-weight:700}
+.duo{display:grid;gap:10px;margin-top:12px}
+.duo p{border-radius:14px;padding:14px 16px;font-size:15.5px}
+.free{background:var(--esp);color:var(--cream)}
+.free b{color:var(--gold)}
+.priv{background:var(--chip);color:var(--esp)}
+.priv b{color:var(--terra)}
+details.manual{margin-top:12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+details.manual summary{cursor:pointer;font-weight:600;color:var(--terra)}
+details.manual ol{margin:10px 0 2px 20px;display:grid;gap:6px;font-size:15.5px;color:var(--esp2);overflow-wrap:anywhere}
+.tips,.see{margin-top:16px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+.tips ul,.see ul{list-style:none;display:grid;gap:8px}
+.tips li,.see li{position:relative;padding-left:26px;overflow-wrap:anywhere}
+.see li:before{content:"✓";position:absolute;left:0;color:var(--sage);font-weight:700}
+.tips li:before{content:"→";position:absolute;left:0;color:var(--terra);font-weight:700}
+.example{margin-top:40px;background:var(--esp);color:var(--cream);border-radius:24px;padding:26px 18px;border-top:0}
+.example h2{color:var(--cream)}
+.example h2 em{color:var(--gold)}
+.example .kicker{color:var(--gold)}
+.flow{display:grid;gap:8px;margin-top:18px}
+.flow div{background:rgba(243,236,225,.07);border:1px solid rgba(243,236,225,.14);border-radius:14px;padding:12px 14px}
+.flow small{display:block;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.flow .arrow{background:none;border:0;padding:0;text-align:center;color:var(--terra);font-weight:700}
+.big{margin-top:16px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.big b{font:400 64px/1 'Instrument Serif',serif;color:var(--gold)}
+.big span{color:rgba(243,236,225,.85)}
+.example .fine{margin-top:12px;font-size:14px;color:rgba(243,236,225,.7)}
+dl.fixes{display:grid;gap:10px;margin-top:14px}
+dl.fixes div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+dl.fixes dt{font-weight:700}
+dl.fixes dd{color:var(--esp2);font-size:15.5px;margin-top:2px;overflow-wrap:anywhere}
+.links ul{list-style:none;margin-top:12px}
+.links li{border-bottom:1px dashed var(--line);padding:10px 0;display:flex;flex-direction:column;gap:2px}
+.links li span{font:400 12px 'JetBrains Mono',monospace;color:var(--esp2);overflow-wrap:anywhere}
+footer{margin-top:40px;border-top:2px dashed rgba(42,31,26,.25);padding:22px 0 40px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+footer .h{font:400 28px 'Instrument Serif',serif}
+footer small{font:400 12px 'JetBrains Mono',monospace;color:var(--esp2)}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--esp);color:var(--cream);font:600 14px 'Inter',sans-serif;padding:10px 16px;border-radius:999px;transition:opacity .2s,transform .2s;pointer-events:none;z-index:10}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (min-width:700px){.needs,.duo{grid-template-columns:1fr 1fr}.example{padding:34px 32px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none !important}}
+</style>
+<style>
+.dash{display:block;margin-top:24px;text-decoration:none;color:var(--cream);background:var(--esp);border-radius:22px;overflow:hidden;box-shadow:0 20px 40px -22px rgba(42,31,26,.8)}
+.dash img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.dash div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px}
+.dash b{font:400 26px/1.1 'Instrument Serif',serif}
+.dash span{flex:none;font:700 13px 'JetBrains Mono',monospace;background:var(--terra);color:#fff;border-radius:999px;padding:10px 16px}
+.shot{margin-top:14px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.shot img{display:block;width:100%}
+.shot figcaption{font:500 12px/1.4 'JetBrains Mono',monospace;color:var(--esp2);padding:9px 12px}
+.cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 0 6px;margin-top:6px}
+.cards a{flex:none;width:44%;max-width:220px;scroll-snap-align:start;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.cards img{display:block;width:100%}
+table.cost{width:100%;border-collapse:collapse;margin-top:14px;font-size:15px;background:var(--paper);border-radius:14px;overflow:hidden}
+table.cost td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+table.cost td:last-child{text-align:right;font:700 13px 'JetBrains Mono',monospace;color:var(--terra);white-space:nowrap}
+</style>
+</head><body><div class="wrap">
+<header>
+  <div class="topline"><span>Ad Factory 2.0</span><span>Guide / Vibha</span></div>
+  <h1>One photo. <em class="ul">100 ads.</em> You just approve.</h1>
+  <p class="dek">The whole system from the reel. Claude writes the hooks, makes the ads with Higgsfield and HyperFrames, reads the numbers every two days and tells you what to kill. Nothing changes until you tap approve. Every link checked on 12 Oct 2026.</p>
+  <a class="dash" href="dashboard/" target="_blank" rel="noopener"><img src="img/ad_wall.jpg" alt="The Ad Factory dashboard: a wall of 100 ad tiles"><div><b>Open the live dashboard</b><span>Open ↗</span></div></a>
+  <nav class="pills" aria-label="Steps"><a href="#setup"><span>00</span>Setup</a><a href="#step-1"><span>01</span>Copywriter</a><a href="#step-2"><span>02</span>Studio</a><a href="#step-3"><span>03</span>Approve</a><a href="#dash"><span>04</span>Dashboard</a><a href="#cards"><span>05</span>Cards</a></nav>
+  <p class="by">@vibha.in.progress · dashboard shows demo data</p>
+</header>
+<main>
+
+<section id="start">
+  <p class="kicker">What you need</p>
+  <h2>Four things, <em>two are free</em></h2>
+  <div class="needs">
+    <div class="need"><span class="n">1</span><div><b>Claude desktop app, Code tab</b><p>On the Pro plan or above. The Code tab can install tools, save files and render video, which normal chat can't.</p></div></div>
+    <div class="need"><span class="n">2</span><div><b>The hormozi-hooks skill</b><p>Free and open source. It writes hooks using Alex Hormozi's hooks x bodies x CTAs system.</p></div></div>
+    <div class="need"><span class="n">3</span><div><b>HyperFrames</b><p>Free and open source from HeyGen. It turns HTML into video on your own laptop. Motion ads and hook stamps cost nothing.</p></div></div>
+    <div class="need"><span class="n">4</span><div><b>Higgsfield, either way</b><p>A paid plan connects through the Higgsfield MCP. No plan? A free API key and a $10 top-up, then you pay per ad.</p></div></div>
+  </div>
+  <p class="honest">Honest bit: it drafts, you approve. Nothing spends money, pauses an ad or moves budget without your tap.</p>
+</section>
+
+<section class="step" id="setup"><div class="stephead"><span class="stepnum">00</span><div><p class="kicker">Setup, once</p><h2>Install the <em>two free tools</em></h2></div></div>
+<p class="why">Open the Code tab, paste this, and let Claude do the installing.</p>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 00</span>Install everything</span><button class="copy" data-target="p0">Copy</button></figcaption>
+<pre id="p0">Set me up for an Ad Factory.
+1. Install the hormozi-hooks skill from github.com/alexsmedile/hormozi-skills (just the skills/hormozi-hooks folder) into my Claude skills.
+2. Install HyperFrames from github.com/heygen-com/hyperframes, plus anything it needs (Node, ffmpeg).
+3. Render a 3 second test video to prove it works and open it for me.
+4. Tell me in plain words what you installed and where.</pre></figure>
+
+<h3 style="margin-top:28px">Connect Higgsfield: pick one route</h3>
+<div class="duo">
+  <p class="free"><b>No subscription (my pick).</b> Go to console.higgsfield.ai, create an API key (it's only shown once, so copy it), top up $10, then paste Prompt 00b. You pay per ad and spending stops at zero.</p>
+  <p class="priv"><b>Already on a paid plan?</b> In Claude, go to Settings, then Connectors, then Add custom connector. Paste <b>https://mcp.higgsfield.ai/mcp</b> and log in.</p>
+</div>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 00b</span>Wire the key to Claude</span><button class="copy" data-target="p0b">Copy</button></figcaption>
+<pre id="p0b">Here's my Higgsfield API key: <span class="ph">[paste your key]</span>.
+1. Save it as HIGGSFIELD_API_KEY in my environment. Never write it into a file I might share.
+2. From now on, make every ad with the Higgsfield API: Marketing Studio for images, <span class="ph">[Kling or Seedance]</span> for video.
+3. Before each render, tell me the price and wait for my OK.
+4. Keep a running total of what I've spent.</pre></figure>
+
+<h3 style="margin-top:28px">Connect your ads account (optional, for step 3)</h3>
+<p class="note">In Claude: Settings, then Connectors, then Add custom connector. Paste <b>https://mcp.facebook.com/ads</b> and log in with Facebook. Meta's official connector is free in open beta and still rolling out, so if you don't see it yet, steps 1 and 2 work without it.</p>
+</section>
+
+<section class="step" id="step-1"><div class="stephead"><span class="stepnum">01</span><div><p class="kicker">Step 1</p><h2>The <em>Copywriter</em></h2></div></div>
+<p class="why">Most brands write one hook per ad. This writes 20, spread across Eugene Schwartz's 5 levels of awareness, from people who don't know they have the problem to people already buying from a rival.</p>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 01</span>20 hooks per ad</span><button class="copy" data-target="p1">Copy</button></figcaption>
+<pre id="p1">Use the hormozi-hooks skill. You're my Copywriter for <span class="ph">[my brand, what it sells]</span>.
+1. Read <span class="ph">[my product page]</span> and <span class="ph">[my 10 best reviews]</span>.
+2. Write 20 hooks for every ad: 4 for each of Eugene Schwartz's 5 awareness levels, from people who don't know the problem exists to people already buying from a rival.
+3. Under 12 words each. It's the first 2 seconds only, so no hype words.
+4. Save them to <span class="ph">[hooks.csv]</span>, grouped by level.
+Show me your top 5 before you write the rest.</pre></figure>
+<figure class="shot"><img src="img/hooks_matrix.jpg" alt="Hooks matrix: hooks by awareness level, coloured by score" loading="lazy"><figcaption>The Hooks tab: every hook by awareness level, coloured by predicted score</figcaption></figure>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 01b</span>20 videos into 100 ads</span><button class="copy" data-target="p1b">Copy</button></figcaption>
+<pre id="p1b">Take the 20 ads in <span class="ph">[my ads folder]</span>.
+1. Use the hormozi-hooks skill to write 5 hooks per ad, one for each awareness level: unaware, problem aware, solution aware, product aware, most aware.
+2. With HyperFrames, stamp each hook on the first 2 seconds: big bold type, word-by-word pop, inside the Reels safe zone.
+3. Keep the body and the ending the same.
+4. Render all 100, name them <span class="ph">[BRAND_FORMAT_HOOK01]</span>, and give me one sheet with every hook.</pre></figure>
+<p class="note"><b>Why 100 is honest:</b> it's 20 real videos with 5 different openings each. Same body, new first 2 seconds. The hook stamps are free because HyperFrames runs on your laptop.</p>
+</section>
+
+<section class="step" id="step-2"><div class="stephead"><span class="stepnum">02</span><div><p class="kicker">Step 2</p><h2>The <em>Studio</em></h2></div></div>
+<p class="why">One product photo becomes real-looking creator ads. Selling software? Claude makes motion graphics ads with HyperFrames instead.</p>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 02</span>UGC ads from one photo</span><button class="copy" data-target="p2">Copy</button></figcaption>
+<pre id="p2">Use Higgsfield. Here's a photo of <span class="ph">[my product, one line on what it is]</span>.
+1. Make 2 UGC ads in Marketing Studio, 9:16, 15 seconds: <span class="ph">[an unboxing on a kitchen counter]</span> and <span class="ph">[a first-try reaction, honest]</span>.
+2. Use different creators, natural light, phone-camera feel. No studio look.
+3. Run both through the Virality Predictor.
+4. Tell me each ad's hook score, the second people would scroll away, and one fix before I spend anything on it.</pre></figure>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 02b</span>Motion ad for software</span><button class="copy" data-target="p2b">Copy</button></figcaption>
+<pre id="p2b">Use HyperFrames and Higgsfield. Make a 15 second 9:16 ad for <span class="ph">[my product + URL]</span>.
+1. Footage: make 3 real-looking shots with Kling 3.0 from my product photo: <span class="ph">[a hand reaching for it]</span>, <span class="ph">[it in use, close up]</span>, <span class="ph">[a genuine reaction]</span>.
+2. Motion layer: a bold headline that lands on the beat, my real app screen tracked onto the footage, one stat counting up from zero.
+3. Brand: pull my colours, fonts and logo from the website.
+4. Ending: logo lockup, <span class="ph">[Try it free]</span>, 1 second hold.
+Show me 3 key frames before the full render.</pre></figure>
+<figure class="shot"><img src="img/studio_grid.jpg" alt="Studio tab: grid of ad videos with Virality Predictor scores" loading="lazy"><figcaption>The Studio tab: every ad with its Virality Predictor ring</figcaption></figure>
+<div class="tips"><ul>
+<li>The Virality Predictor scores each ad's hook and attention before you spend. In my test the fancy motion ad scored lowest (43) and both UGC ads peaked at second 12, which meant the hook came too late.</li>
+<li>Ask for 1 or 2 ads per prompt, not 20. Check them, then make more of what works.</li>
+<li>Higgsfield templates (Marketing Studio presets) are a quick win for product shots. Ask Claude to show you a few first.</li>
+</ul></div>
+</section>
+
+<section class="step" id="step-3"><div class="stephead"><span class="stepnum">03</span><div><p class="kicker">Step 3 · my favourite</p><h2>The <em>Approve</em> button</h2></div></div>
+<p class="why">Every two days Claude pulls the numbers and drafts one card: double down on these, pause these, remix the winner into five new hooks. You reply APPROVE or you don't.</p>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 03</span>The every-2-days report</span><button class="copy" data-target="p3">Copy</button></figcaption>
+<pre id="p3">Every 2 days at 9am: pull the last 48 hours of results for every live ad from <span class="ph">[Meta Ads]</span>.
+1. Rank every ad by return on ad spend.
+2. Double down: the top 2, plus 20% budget.
+3. Pause: anything under <span class="ph">[1.5x]</span> after <span class="ph">[₹2,000]</span> spent.
+4. Remix: turn the best hook into 5 new versions.
+Put it all on one card with the numbers behind each call. Do not change anything until I reply APPROVE.</pre></figure>
+<div class="check"><ol>
+<li><span>Paste Prompt 03 into the Claude desktop app and say <b>"schedule this every 2 days at 9am"</b>.</span></li>
+<li><span>Claude sets it up as a scheduled task. You can see and edit it in the app any time.</span></li>
+<li><span>When the card lands, read it, then reply <b>APPROVE</b> (or tell it what to change).</span></li>
+</ol></div>
+<p class="note small"><b>Honest note:</b> scheduled tasks only run while your laptop is awake and Claude is open. If it's asleep, the run happens when it wakes up.</p>
+<figure class="shot"><img src="img/report_card.jpg" alt="Report card with double down, pause and remix decisions and an Approve button" loading="lazy"><figcaption>The Today tab: the report card and the Approve button</figcaption></figure>
+</section>
+
+<section class="step" id="dash"><div class="stephead"><span class="stepnum">04</span><div><p class="kicker">The dashboard</p><h2>See it all <em>on one page</em></h2></div></div>
+<p class="why">Click around <a href="dashboard/" target="_blank" rel="noopener">my demo dashboard</a> first (press T for the tour, A to approve). Then ask Claude to build yours.</p>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 04</span>Build my dashboard</span><button class="copy" data-target="p4">Copy</button></figcaption>
+<pre id="p4">Build me a one-page ad dashboard as a single HTML file I can open in my browser, for <span class="ph">[my brand]</span>.
+Tabs:
+1. Today: the latest report card with an Approve button, plus spend, return on ad spend and cost per sale.
+2. Hooks: every hook by the 5 awareness levels, coloured by score.
+3. Studio: every video in <span class="ph">[my ads folder]</span> as a playing tile with its Virality score, plus a Make New button that drafts new ads from my winning formats.
+4. Results: return-on-spend ranking, hook vs hold scatter, an ad fatigue line.
+5. Log: every change and when I approved it.
+Use demo data labelled DEMO until my ads account is connected. Show me a screenshot before you add the charts.</pre></figure>
+<figure class="shot"><img src="img/results.jpg" alt="Results tab with charts" loading="lazy"><figcaption>The Results tab: ROAS race, hook vs hold, fatigue, funnel</figcaption></figure>
+</section>
+
+<section id="cards">
+  <p class="kicker">Save to your phone</p>
+  <h2>All the <em>prompt cards</em></h2>
+  <p class="note">Tap a card to open it full size.</p>
+  <div class="cards">
+    <a href="cards/07_copywriter-setup.jpg" target="_blank" rel="noopener"><img src="cards/07_copywriter-setup.jpg" alt="Copywriter prompt card" loading="lazy"></a>
+    <a href="cards/06_schwartz-awareness.jpg" target="_blank" rel="noopener"><img src="cards/06_schwartz-awareness.jpg" alt="Eugene Schwartz's 5 awareness levels" loading="lazy"></a>
+    <a href="cards/03_100-ad-multiplier.jpg" target="_blank" rel="noopener"><img src="cards/03_100-ad-multiplier.jpg" alt="100 ad multiplier prompt card" loading="lazy"></a>
+    <a href="cards/02_ugc-studio.jpg" target="_blank" rel="noopener"><img src="cards/02_ugc-studio.jpg" alt="UGC studio prompt card" loading="lazy"></a>
+    <a href="cards/01_motion-ad.jpg" target="_blank" rel="noopener"><img src="cards/01_motion-ad.jpg" alt="Motion ad prompt card" loading="lazy"></a>
+    <a href="cards/04_approve-report.jpg" target="_blank" rel="noopener"><img src="cards/04_approve-report.jpg" alt="Approve report prompt card" loading="lazy"></a>
+    <a href="cards/05_higgsfield-api-key.jpg" target="_blank" rel="noopener"><img src="cards/05_higgsfield-api-key.jpg" alt="Higgsfield API key steps" loading="lazy"></a>
+    <a href="cards/08_wire-higgsfield-key.jpg" target="_blank" rel="noopener"><img src="cards/08_wire-higgsfield-key.jpg" alt="Wire the Higgsfield key prompt card" loading="lazy"></a>
+  </div>
+</section>
+
+<section class="example">
+  <p class="kicker">What it cost me</p>
+  <h2>Real numbers from <em>my test</em></h2>
+  <div class="big"><b>$10</b><span>top-up is enough to start on the API route</span></div>
+  <div class="flow">
+    <div><small>Hooks + hook stamps</small>Free. hormozi-hooks and HyperFrames run on your laptop.</div>
+    <div><small>Marketing Studio image</small>About $0.006 each on the Higgsfield API (published price).</div>
+    <div><small>UGC video, 12s at 480p</small>42 Higgsfield credits each on my plan. Claude quotes the price before every render.</div>
+  </div>
+  <p class="fine">Prices change, so let Claude check before each render (Prompt 00b does this). The dashboard numbers are demo data.</p>
+</section>
+
+<section class="links">
+  <p class="kicker">Every link</p>
+  <h2>Sources, <em>checked</em></h2>
+  <ul>
+    <li><a href="https://github.com/alexsmedile/hormozi-skills/tree/main/skills/hormozi-hooks" target="_blank" rel="noopener">hormozi-hooks skill</a><span>github.com/alexsmedile/hormozi-skills</span></li>
+    <li><a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener">HyperFrames</a><span>github.com/heygen-com/hyperframes</span></li>
+    <li><a href="https://console.higgsfield.ai/dashboard" target="_blank" rel="noopener">Higgsfield API console (free key)</a><span>console.higgsfield.ai</span></li>
+    <li><a href="https://higgsfield.ai/blog/higgsfield-api" target="_blank" rel="noopener">Higgsfield API prices</a><span>higgsfield.ai/blog/higgsfield-api</span></li>
+    <li><a href="https://higgsfield.ai/creator-hub/help-center/integrations/how-do-i-connect-higgsfield-to-ai-agent" target="_blank" rel="noopener">Higgsfield MCP (paid plans)</a><span>mcp.higgsfield.ai/mcp</span></li>
+    <li><a href="https://higgsfield.ai/marketing-studio" target="_blank" rel="noopener">Higgsfield Marketing Studio</a><span>higgsfield.ai/marketing-studio</span></li>
+    <li><a href="https://higgsfield.ai/apps/virality-predictor" target="_blank" rel="noopener">Virality Predictor</a><span>higgsfield.ai/apps/virality-predictor</span></li>
+    <li><a href="https://www.facebook.com/business/news/meta-ads-ai-connectors" target="_blank" rel="noopener">Meta Ads AI connector</a><span>mcp.facebook.com/ads</span></li>
+    <li><a href="https://support.claude.com/en/articles/13854387" target="_blank" rel="noopener">Claude scheduled tasks</a><span>support.claude.com</span></li>
+  </ul>
+</section>
+</main>
+<footer><span class="h">Love, Vibha</span><small>@vibha.in.progress · dashboard is demo data</small></footer>
+<div class="toast" role="status" aria-live="polite"></div>
+</div>
+<script>
+(function(){
+  var toast=document.querySelector('.toast'),t;
+  function show(msg){toast.textContent=msg;toast.classList.add('on');clearTimeout(t);t=setTimeout(function(){toast.classList.remove('on')},1600)}
+  function fallback(text){
+    var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.top='-1000px';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,text.length);
+    var ok=false;try{ok=document.execCommand('copy')}catch(e){ok=false}
+    document.body.removeChild(ta);return ok;
+  }
+  function done(btn,ok){
+    btn.textContent=ok?'Copied':'Select + copy';btn.classList.toggle('done',ok);
+    show(ok?'Copied. Paste it into Claude.':'Copy blocked here. Long-press the text to copy.');
+    setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done')},1800);
+  }
+  document.querySelectorAll('button.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var pre=document.getElementById(btn.getAttribute('data-target'));var text=pre?pre.innerText:'';
+      try{
+        if(navigator.clipboard&&window.isSecureContext){
+          navigator.clipboard.writeText(text).then(function(){done(btn,true)},function(){done(btn,fallback(text))});
+        }else{done(btn,fallback(text))}
+      }catch(e){done(btn,fallback(text))}
+    });
+  });
+})();
+</script>
+</body></html>
