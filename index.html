@@ -134,7 +134,7 @@ table.cost td:last-child{text-align:right;font:700 13px 'JetBrains Mono',monospa
   <h2>Four things, <em>two are free</em></h2>
   <div class="needs">
     <div class="need"><span class="n">1</span><div><b>Claude desktop app, Code tab</b><p>On the Pro plan or above. The Code tab can install tools, save files and render video, which normal chat can't.</p></div></div>
-    <div class="need"><span class="n">2</span><div><b>The hormozi-hooks skill</b><p>Free and open source. It writes hooks using Alex Hormozi's hooks x bodies x CTAs system.</p></div></div>
+    <div class="need"><span class="n">2</span><div><b>The hormozi-hooks skill</b><p>Free and open source. It writes scroll-stopping hooks in Alex Hormozi's style. Prompt 01a then turns them into full ads: hook, body and CTA.</p></div></div>
     <div class="need"><span class="n">3</span><div><b>HyperFrames</b><p>Free and open source from HeyGen. It turns HTML into video on your own laptop. Motion ads and hook stamps cost nothing.</p></div></div>
     <div class="need"><span class="n">4</span><div><b>Higgsfield, either way</b><p>A paid plan connects through the Higgsfield MCP. No plan? A free API key and a $10 top-up, then you pay per ad.</p></div></div>
   </div>
@@ -176,6 +176,16 @@ table.cost td:last-child{text-align:right;font:700 13px 'JetBrains Mono',monospa
 4. Save them to <span class="ph">[hooks.csv]</span>, grouped by level.
 Show me your top 5 before you write the rest.</pre></figure>
 <figure class="shot"><img src="img/hooks_matrix.jpg" alt="Hooks matrix: hooks by awareness level, coloured by score" loading="lazy"><figcaption>The Hooks tab: every hook by awareness level, coloured by predicted score</figcaption></figure>
+<p class="why">A hook is only the first 2 seconds. This next prompt turns your best hooks into full ads: the middle that proves it (the body) and the ending that asks for the sale (the CTA), ready for Step 2.</p>
+<figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 01a</span>Hooks into full ad scripts</span><button class="copy" data-target="p1a">Copy</button></figcaption>
+<pre id="p1a">Use my hooks in <span class="ph">[hooks.csv]</span>. You're now my Scriptwriter for <span class="ph">[my brand]</span>.
+1. Pick the best 2 hooks from each awareness level, so 10 in total.
+2. For each one, write a 15 second body that pays off the hook: the problem in one line, real proof from <span class="ph">[my reviews or results]</span>, the product doing its job, then why now.
+3. Give each script one format: UGC unboxing, first-try reaction, demo, testimonial or motion ad. Mix them up, no format more than 3 times.
+4. End each with one of 3 CTAs: <span class="ph">[Shop now]</span>, <span class="ph">[Try it free]</span>, <span class="ph">[Link in bio]</span>. Never invent a discount, review or claim I don't have.
+5. Write each as a beat sheet (seconds, what we see, what's said, on-screen text) and save all 10 to <span class="ph">[ad-scripts.csv]</span>.
+Show me 2 full scripts before you write the rest.</pre></figure>
+<p class="note"><b>Order that works:</b> Prompt 01 (hooks), then 01a (scripts), then make the videos in Step 2. Once you have videos, come back to 01b to stamp 5 hooks on each.</p>
 <figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 01b</span>20 videos into 100 ads</span><button class="copy" data-target="p1b">Copy</button></figcaption>
 <pre id="p1b">Take the 20 ads in <span class="ph">[my ads folder]</span>.
 1. Use the hormozi-hooks skill to write 5 hooks per ad, one for each awareness level: unaware, problem aware, solution aware, product aware, most aware.
@@ -189,7 +199,7 @@ Show me your top 5 before you write the rest.</pre></figure>
 <p class="why">One product photo becomes real-looking creator ads. Selling software? Claude makes motion graphics ads with HyperFrames instead.</p>
 <figure class="pblock"><figcaption><span class="plabel"><span class="ptag">Prompt 02</span>UGC ads from one photo</span><button class="copy" data-target="p2">Copy</button></figcaption>
 <pre id="p2">Use Higgsfield. Here's a photo of <span class="ph">[my product, one line on what it is]</span>.
-1. Make 2 UGC ads in Marketing Studio, 9:16, 15 seconds: <span class="ph">[an unboxing on a kitchen counter]</span> and <span class="ph">[a first-try reaction, honest]</span>.
+1. Take the 2 best UGC scripts from <span class="ph">[ad-scripts.csv]</span> and make each in Marketing Studio, 9:16, 15 seconds, following the beat sheet. No scripts yet? Make <span class="ph">[an unboxing on a kitchen counter]</span> and <span class="ph">[a first-try reaction, honest]</span>.
 2. Use different creators, natural light, phone-camera feel. No studio look.
 3. Run both through the Virality Predictor.
 4. Tell me each ad's hook score, the second people would scroll away, and one fix before I spend anything on it.</pre></figure>
